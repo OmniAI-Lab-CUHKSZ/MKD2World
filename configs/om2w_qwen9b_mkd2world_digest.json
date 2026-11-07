@@ -1,0 +1,60 @@
+{
+  "name": "om2w_qwen9b_mkd2world_digest",
+  "benchmark": "Online-Mind2Web",
+  "split": "stable109",
+  "task_manifest": "eval/online_mind2web/stable109_task_ids.json",
+  "dataset": "eval/online_mind2web/tasks.json",
+  "schema": "eval/online_mind2web/submission_schema.json",
+  "source_run": "qwen9b_mkd2world_p21_digest_stable109_20260912",
+  "policy": {
+    "version": "P2.1",
+    "strategy": "p2_digest",
+    "digest": true,
+    "tsm_aware_agent": false,
+    "candidate_prompt": "mkd2world/prompts/p2.1/candidate.md",
+    "digest_prompt": "mkd2world/prompts/p2.1/digest.md",
+    "best_prompt": "mkd2world/prompts/p2.1/best.md",
+    "world_prompt": "mkd2world/prompts/templatesV3/train_localwm/localwm_next.md",
+    "world_prompt_key": "localwm_next",
+    "output_state_mode": "replayed_next",
+    "gui_agent_use_current_md": false
+  },
+  "agent": {
+    "base_model": "Qwen3.5-9B",
+    "adapter": null,
+    "temperature": 0,
+    "enable_thinking": true,
+    "reasoning_effort": "medium",
+    "thinking_token_budget": 4096,
+    "max_context_tokens": 32768,
+    "max_tokens": 5000,
+    "retries": 2
+  },
+  "world_model": {
+    "base_model": "Qwen3.5-9B",
+    "adapter_step": 700,
+    "temperature": 0,
+    "enable_thinking": false,
+    "max_context_tokens": 60000,
+    "max_tokens": 6000,
+    "timeout_seconds": 300
+  },
+  "browser": {
+    "mode": "screenshot",
+    "viewport_width": 1280,
+    "viewport_height": 720,
+    "max_steps": 50,
+    "no_progress_limit": 4,
+    "action_wait_ms": 2500,
+    "navigation_retries": 2,
+    "navigation_timeout_ms": 45000,
+    "disable_http2": true,
+    "entry_wait_until": "domcontentloaded",
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36"
+  },
+  "resources": {
+    "recorded_layout": "2 static shards, 3 browsers per shard",
+    "concurrency_default": 1,
+    "note": "Sampling matches the 2026-09-12 Qwen3.5-9B plus MKD2World P2.1 digest run. The agent is the base model with no TSM adapter."
+  }
+}

@@ -1,0 +1,75 @@
+TASK CONTRACT
+
+Evaluate exactly one desktop Web UI screenshot sample. Return four independent quality scores from 0 to 100. 
+
+Judge only the evidence in this call. Do not identify or guess the dataset, collection method, author, website, or benchmark. 
+
+
+IMAGE ROLES
+
+Image A is the unannotated screenshot. Use Image A only for page_complexity.
+
+Image B is the same screenshot with thin black-and-white annotation outlines and small numeric box identifiers.
+
+
+
+SCORING RUBRIC
+
+1. annotation_object_validity
+
+Definition: The proportion of evaluable annotations that correspond to a visually recognizable UI element or meaningful UI region. Atomic controls, text, images, groups, containers, navigation regions, content regions, and other structural blocks can be valid targets.
+
+Anchors:
+- 0: No usable annotation corresponds to a recognizable intended target, or annotation_state fixes this score at zero.
+- 25: Only a small minority of annotations have recognizable intended targets; empty or background-only boxes dominate.
+- 50: Recognizable and unrecognizable intended targets are roughly balanced.
+- 75: Most annotations have recognizable intended targets, with a noticeable minority of empty, background-only, or unusable annotations.
+- 100: Essentially every evaluable annotation has a clearly recognizable intended target and source-level machine issues are absent or negligible.
+
+2. boundary_alignment
+
+Definition: How well assessable original sides represent reasonable boundaries for recognizable target semantics. Atomic visual elements should have visually tight or appropriate interaction boundaries. Text or CSS-content labels may use content-oriented boxes. Structural regions may use semantic grouping boundaries.
+
+Anchors:
+- 0: Assessable sides are almost entirely unrelated to, or severely displaced from, their recognizable targets.
+- 25: Major displacement, excessive extent, or severe clipping affects most assessable original sides.
+- 50: Assessable original sides show a roughly even mix of reasonable and materially inaccurate placement.
+- 75: Most assessable original sides reasonably delimit their targets, with a noticeable minority that are loose, shifted, clipped, or undersized.
+- 100: Essentially all assessable sides closely match reasonable atomic, interaction, content, or structural boundaries for their targets.
+
+3. label_semantic_reasonableness
+
+Definition: Whether each valid, recognizable target's complete provided label set is semantically compatible with that target under the supplied `classes` table. Broad functional, visual, accessibility-role, atomic, and structural labels can all be reasonable. Compatible multi-label descriptions are valid.
+
+Anchors:
+- 0: Equal-weight semantic contributions are essentially all zero; supplied labels are incompatible with their visible targets.
+- 25: Equal-weight semantic contributions average near one quarter; most annotations have incompatible or largely incompatible label sets.
+- 50: Equal-weight semantic contributions average near one half, reflecting a roughly balanced mixture of compatible and incompatible labels within annotations.
+- 75: Equal-weight semantic contributions average near three quarters; most annotations have fully or mostly compatible label sets, with a noticeable minority of mismatches.
+- 100: Equal-weight semantic contributions are essentially all one; every supplied label is compatible with its visible target and supplied ontology.
+
+4. page_complexity
+
+Definition: The amount, diversity, and depth of visible UI structure in Image A. Consider layout hierarchy, visible regions, component variety, information density, spatial relationships, typography, imagery, color relationships, and interaction affordances together. 
+
+Anchors:
+- 0: Almost blank or visually empty, with essentially no discernible page structure or content.
+- 25: A sparse page with one simple region, few visible component types, and little hierarchy or information.
+- 50: A moderately structured page with several regions or component types and ordinary information density.
+- 75: Many visible regions and component types, with substantial hierarchy or dense spatial relationships.
+- 100: Exceptionally many diverse UI regions and components with very deep or dense visible relationships, regardless of presentation quality.
+
+
+OUTPUT CONTRACT
+
+Return exactly one JSON object and nothing else:
+
+{
+  "sample_id": "<sample_id>",
+  "annotation_object_validity": 0,
+  "boundary_alignment": 0,
+  "label_semantic_reasonableness": 0,
+  "page_complexity": 0
+}
+
+Each score is an integer from 0 to 100. Copy sample_id from the supplied sample.

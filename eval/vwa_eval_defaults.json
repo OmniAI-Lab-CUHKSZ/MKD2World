@@ -1,0 +1,30 @@
+{
+  "schema": "vwa233-eval-defaults-v1",
+  "note": "VisualWebArena GUI-agent runs use this profile with or without MKD2World. Prompts still differ by method. GUI-Owl and DeepSeek official thinking are exceptions.",
+  "gui_agent": {
+    "temperature": 0,
+    "enable_thinking": true,
+    "reasoning_effort": "medium",
+    "thinking_token_budget": 4096,
+    "max_context_tokens": 32768,
+    "max_tokens": 5000,
+    "timeout_seconds": 300,
+    "retry_attempts": 2
+  },
+  "world_model": {
+    "temperature": 0.0,
+    "enable_thinking": false,
+    "max_context_tokens": 60000,
+    "max_tokens": 6000,
+    "timeout_seconds": 300,
+    "retry_attempts": 2
+  },
+  "runtime": {
+    "viewport_width": 1280,
+    "viewport_height": 2048,
+    "max_steps": 50,
+    "no_progress_limit": 4,
+    "repeat_action_limit": 5,
+    "sleep_after_execution": 1.0
+  }
+}

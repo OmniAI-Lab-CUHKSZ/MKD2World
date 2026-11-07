@@ -1,0 +1,72 @@
+{
+  "experiment": {
+    "name": "vwa_qwen35b_mkd2world_digest",
+    "dataset": "visualwebarena",
+    "output_dir": "",
+    "methods": ["agent_plus_local_wm"],
+    "dry_run": false
+  },
+  "pipeline": {
+    "agent": {
+      "kind": "openai_compatible",
+      "provider": "openai_compatible",
+      "model": "qwen3.5-35b-a3b",
+      "base_url": "http://127.0.0.1:18310/v1",
+      "api_key_env": "OPENAI_API_KEY",
+      "temperature": 1.0,
+      "max_tokens": 5000,
+      "timeout_seconds": 300,
+      "max_concurrency": 1,
+      "retry_attempts": 2,
+      "enabled": true,
+      "options": {
+        "enable_thinking": true,
+        "reasoning_effort": "medium",
+        "thinking_token_budget": 4096,
+        "max_context_tokens": 32768,
+        "policy_version": "p2.1",
+        "candidate_prompt": "mkd2world/prompts/p2.1/candidate.md",
+        "digest_prompt": "mkd2world/prompts/p2.1/digest.md",
+        "best_prompt": "mkd2world/prompts/p2.1/best.md"
+      }
+    },
+    "global_world_model": {
+      "kind": "noop",
+      "enabled": false
+    },
+    "local_world_model": {
+      "kind": "openai_compatible",
+      "provider": "openai_compatible",
+      "model": "mkd2world-9b",
+      "base_url": "http://127.0.0.1:18340/v1",
+      "api_key_env": "OPENAI_API_KEY",
+      "temperature": 0.0,
+      "max_tokens": 6000,
+      "timeout_seconds": 300,
+      "retry_attempts": 2,
+      "enabled": true,
+      "options": {
+        "enable_thinking": false,
+        "max_context_tokens": 60000,
+        "prompt": "mkd2world/prompts/templatesV3/train_localwm/localwm_next.md"
+      }
+    },
+    "memory": {"kind": "noop", "enabled": false},
+    "environment": {
+      "kind": "vwa_runtime",
+      "enabled": true,
+      "options": {
+        "vwa_root": "envs/visualwebarena",
+        "headless": true,
+        "width": 1280,
+        "height": 2048,
+        "sleep_after_execution": 1.0,
+        "site_urls": {}
+      }
+    },
+    "mode": "vanilla",
+    "enable_global_wm": false,
+    "enable_local_wm": true,
+    "enable_memory": false
+  }
+}
